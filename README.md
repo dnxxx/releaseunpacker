@@ -16,16 +16,16 @@ This:
 
 Will be turned into:
 
-  Release-Group.mkv
-  Release-Group.idx
-  Release-Group.sub
+    Release-Group.mkv
+    Release-Group.idx
+    Release-Group.sub
 
 
 ## Environment variables
 If you set these you don't need -t or -u every time.
 
-  RELEASEUNPACKER_TMP_DIR - Tmp dir to unpack to
-  RELEASEUNPACKER_UNPACK_DIR - Final dir to move unpacked files to
+    RELEASEUNPACKER_TMP_DIR - Tmp dir to unpack to
+    RELEASEUNPACKER_UNPACK_DIR - Final dir to move unpacked files to
 
 ## Usage
     releaseunpacker /path/to/dir
@@ -56,10 +56,10 @@ If you set these you don't need -t or -u every time.
 
 
 ## Crontab example
-  releaseunpacker --silent --log /path/to/log/dir/releaseunpacker.log /path/to/dir
+    releaseunpacker --silent --log /path/to/log/dir/releaseunpacker.log /path/to/dir
 
 ## Install
-pip install git+//...
+    pip install git+https://github.com/dnxxx/releaseunpacker
 
 ## Warning
 No checks are currently made to make sure the unpack was successfull. If an
@@ -72,4 +72,4 @@ and then removed.
 You've been warned!
 
 ## Todo
-- Validate unpack before remove release dir
+- Validate unpack before removal of release dir

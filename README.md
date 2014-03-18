@@ -63,6 +63,8 @@ If you set these you don't need -t or -u every time.
     pip install git+https://github.com/dnxxx/releaseunpacker
 
 ## Warning
+This hasn't been really battle tested yet, there will probably be bugs.
+
 No checks are currently made to make sure the unpack was successfull. If an
 unpack fails without an exception the release dir will still be removed.
 

@@ -33,6 +33,7 @@ If you set these you don't need -t or -u every time.
 
 ## Help
     usage: releaseunpacker [-h] [-t TMP_DIR] [-u UNPACK_DIR] [-d] [-n] [-s]
+                           [-l LOG]
                            [release_dir [release_dir ...]]
 
     Unpacks all movie releases in release_dir. Supports mkv, avi and img/iso
@@ -53,7 +54,7 @@ If you set these you don't need -t or -u every time.
       -d, --debug           Output debug info (default: False)
       -n, --no-remove       Don't remove anything after unpack (default: False)
       -s, --silent          Disable console output (default: False)
-
+      -l LOG, --log LOG     Log to file (default: None)
 
 ## Crontab example
     releaseunpacker --silent --log /path/to/log/dir/releaseunpacker.log /path/to/dir

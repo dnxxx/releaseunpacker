@@ -17,9 +17,10 @@ from releaseunpacker import setup_log, ReleaseUnpacker, ReleaseUnpackerError
 @arg('-n', '--no-remove', default=False, help=('Don\'t remove anything after '
                                                'unpack'))
 @arg('-s', '--silent', default=False, help='Disable console output')
+@arg('-l', '--log', default=None, help='Log to file')
 @wrap_errors(processor=lambda excinfo: 'ERROR: {0}'.format(excinfo))
 def main(tmp_dir=None, unpack_dir=None, debug=False, no_remove=False,
-         silent=False, *release_dir):
+         silent=False, log=None, *release_dir):
     """Unpacks all movie releases in release_dir. Supports mkv, avi and
     img/iso releases. Also extracts subs if a subs folder is found. Renames
     all unpacked files to the same name as relase dir.
@@ -48,7 +49,7 @@ def main(tmp_dir=None, unpack_dir=None, debug=False, no_remove=False,
     # Setup logging
     log = setup_log('releaseunpacker',
                     console_output=True,
-                    log_file=False,
+                    log_file=log,
                     level=logging.INFO)
 
     # Debug logging

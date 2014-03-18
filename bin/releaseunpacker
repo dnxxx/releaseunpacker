@@ -1,0 +1,80 @@
+#!/usr/bin/env python
+import os
+import logging
+
+from tendo import singleton
+import argh
+from argh.decorators import arg, wrap_errors
+from argh.exceptions import CommandError
+
+from releaseunpacker import setup_log, ReleaseUnpacker, ReleaseUnpackerError
+
+
+@arg('-t', '--tmp-dir', default=None, help='Tmp dir to unpack release to')
+@arg('-u', '--unpack-dir', default=None, help=('Dir to move unpacked'
+                                               ' releases to'))
+@arg('-d', '--debug', default=False, help='Output debug info')
+@arg('-n', '--no-remove', default=False, help=('Don\'t remove anything after '
+                                               'unpack'))
+@arg('-s', '--silent', default=False, help='Disable console output')
+@wrap_errors(processor=lambda excinfo: 'ERROR: {0}'.format(excinfo))
+def main(tmp_dir=None, unpack_dir=None, debug=False, no_remove=False,
+         silent=False, *release_dir):
+    """Unpacks all movie releases in release_dir. Supports mkv, avi and
+    img/iso releases. Also extracts subs if a subs folder is found. Renames
+    all unpacked files to the same name as relase dir.
+
+    ENV vars:
+    RELEASEUNPACKER_TMP_DIR tmp dir to unpack release to, same as -t.
+    RELEASEUNPACKER_UNPACK_DIR dir to move unpacked release to, same as -u.
+    """
+
+    # Use tmp_dir from arg first and ENV second
+    if not tmp_dir:
+        tmp_dir = os.environ.get('RELEASEUNPACKER_TMP_DIR')
+
+        if not tmp_dir:
+            raise CommandError('Tmp dir missing. Use -t or set ENV var'
+                               ' RELEASEUNPACKER_TMP_DIR')
+
+    # Use unpack_dir from arg first and ENV second
+    if not unpack_dir:
+        unpack_dir = os.environ.get('RELEASEUNPACKER_UNPACK_DIR')
+
+        if not unpack_dir:
+            raise CommandError('Unpack dir missing. Use -u or set ENV var'
+                               ' RELEASEUNPACKER_UNPACK_DIR')
+
+    # Setup logging
+    log = setup_log('releaseunpacker',
+                    console_output=True,
+                    log_file=False,
+                    level=logging.INFO)
+
+    # Debug logging
+    if debug:
+        log.setLevel(logging.DEBUG)
+
+    # Silent, only output to log
+    if silent:
+        log.propagate = False
+
+    # Release dir(s)
+    if not release_dir:
+        raise CommandError('Missing release dir(s)')
+
+    # Loop all release dirs from arg and unpack releases found
+    for rel_dir in release_dir:
+        try:
+            release_unpacker = ReleaseUnpacker(rel_dir, tmp_dir, unpack_dir,
+                                               no_remove)
+            release_unpacker.unpack_release_dir_rars()
+        except ReleaseUnpackerError, e:
+            raise CommandError(e.message)
+
+
+if __name__ == '__main__':
+    # Force single instance
+    me = singleton.SingleInstance()
+
+    argh.dispatch_command(main)

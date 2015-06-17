@@ -173,7 +173,8 @@ class ReleaseUnpacker(object):
         for rarfile_file in release_unpacker_rar_file.file_list:
             # Check file ext
             if rarfile_file['name'].ext not in ('.avi', '.mkv',
-                                                '.img', '.iso'):
+                                                '.img', '.iso',
+                                                '.mp4'):
                 log.info('Skipping {}, unwanted ext'.format(
                     rarfile_file['name']))
                 continue

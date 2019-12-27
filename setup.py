@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='releaseunpacker',
-    version='0.2.0',
+    version='1.0.0',
     description='Release unpacker',
 
     packages=['releaseunpacker'],
@@ -13,11 +13,11 @@ setup(
     license='BSD',
 
     install_requires=[
-        'tendo',
-        'argh',
-        'unipath',
-        'rarfile',
         'ago',
+        'argh',
         'lazy',
+        'rarfile',
+        'tendo',
+        'unipath',
     ]
 )

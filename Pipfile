@@ -1,0 +1,26 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pydocstyle = "*"
+pylint = "*"
+ipdb = "*"
+rope = "*"
+black = "*"
+coverage = "*"
+
+[packages]
+ago = "*"
+argh = "*"
+lazy = "*"
+rarfile = "*"
+tendo = "*"
+unipath = "*"
+
+[requires]
+python_version = "3.6"
+
+[pipenv]
+allow_prereleases = true
